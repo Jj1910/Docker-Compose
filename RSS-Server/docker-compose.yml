@@ -16,10 +16,10 @@ services:
     ports:
       - "80:80"
     volumes:
-      # - "./data:/config"  #bind host path of current working directory to /config on the guest
       - rss-data:/config #bind docker volume called rss-data to /config on guest
     restart: unless-stopped
     image: "lscr.io/linuxserver/freshrss:latest"
 volumes:   #only use if defining docker volume in line 18.
- rss-data:
-   name: rss-data
+  rss-data:
+    name: rss-data
+    external: true  #only use if volume has been created once before by running docker compose up and then docker compose down
