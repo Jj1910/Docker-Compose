@@ -1,14 +1,12 @@
 #This is the docker commands used by Chris from Chris Titus Tech converted to docker-compose, along with using volumes instead of bind storage.
 version: "3.3"
 services:
-
   fivefilters-full-text-rss:
     container_name: aggregator-full-text-rss
     ports:
       - "50000:80"
     restart: always
     image: "heussd/fivefilters-full-text-rss:latest"
-    
   linuxserver:
     container_name: reader-freshrss
     environment:
@@ -21,8 +19,7 @@ services:
       - rss-data:/config #bind docker volume called rss-data to /config on guest
     restart: unless-stopped
     image: "lscr.io/linuxserver/freshrss:latest"
-    
 volumes:   #only use if defining docker volume in line 18.
   rss-data:
     name: rss-data
-    external: true  #only use if volume has been created once before by running docker compose up and then docker compose down
+    external: true  #only use if volume has been created once before
