@@ -2,13 +2,13 @@
 version: "3.3"
 services:
   fivefilters-full-text-rss:
-    container_name: aggregator-full-text-rss
+    container_name: Aggregator
     ports:
       - "50000:80"
     restart: always
     image: "heussd/fivefilters-full-text-rss:latest"
   linuxserver:
-    container_name: reader-freshrss
+    container_name: FreshRSS
     environment:
       - PUID=1000
       - PGID=1000
