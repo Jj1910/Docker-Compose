@@ -16,9 +16,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - rss-data:/config #bind docker volume called rss-data to /config on guest
+      - rss-data:/var/www/FreshRSS/data #bind docker volume called rss-data to /config on guest
     restart: unless-stopped
-    image: "lscr.io/linuxserver/freshrss:latest"
+    image: "freshrss/freshrss:latest"
 volumes:   #only use if defining docker volume in line 18.
   rss-data:
     name: rss-data
