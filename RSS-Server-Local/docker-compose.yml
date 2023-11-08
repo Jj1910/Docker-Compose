@@ -2,7 +2,7 @@ version: "3.3"
 services:
   Aggregator:
     container_name: "Aggregator"
-    restart: "always"
+    restart: "unless-stopped"
     image: "heussd/fivefilters-full-text-rss:latest"
     labels:
       - "traefik.enable=true"
