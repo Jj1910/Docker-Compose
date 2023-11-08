@@ -1,4 +1,3 @@
-#This is the docker commands used by Chris from Chris Titus Tech converted to docker-compose, along with using volumes instead of bind storage.
 version: "3.3"
 services:
   fivefilters-full-text-rss:
