@@ -1,0 +1,40 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: :443
+
+  dashboard:
+    address: :8080
+
+certificatesResolvers:
+  staging:
+    acme:
+      email: 
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      tlsChallenge: "true"
+
+  production:
+    acme:
+      email: 
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      tlsChallenge: "true"
+
+providers:
+  docker:
+    exposedByDefault: false
