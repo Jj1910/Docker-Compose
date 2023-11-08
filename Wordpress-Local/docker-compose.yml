@@ -1,12 +1,11 @@
 version: '3.1'
 
 services:
-
-  Wordpress:
+  wordpress:
     image: wordpress:latest
     restart: always
     environment:
-      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_HOST: Database
       WORDPRESS_DB_USER: exampleuser
       WORDPRESS_DB_PASSWORD: examplepass
       WORDPRESS_DB_NAME: exampledb
@@ -14,11 +13,9 @@ services:
       - wordpress-data:/var/www/html
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.feed.rule=Host(`wordpress.docker`)"
-      - "traefik.http.routers.feed.entrypoints=web,websecure"
-      - "traefik.http.routers.feed.tls=true"
-    depends_on:
-      - "Database"
+      - "traefik.http.routers.wordpress.rule=Host(`wordpress.docker`)"
+      - "traefik.http.routers.wordpress.entrypoints=web,websecure"
+      - "traefik.http.routers.wordpress.tls=true"
 
   Database:
     image: mysql:latest
@@ -34,11 +31,12 @@ services:
 volumes:
   wordpress-data:
     name: "wordpress-data"
-    external: "true"
+    external: true
   wordpress-db:
     name: "wordpress-db"
-    external: "true"
+    external: true
+
 networks:
   default:
     name: Traefik
-    external: "true"
+    external: true
