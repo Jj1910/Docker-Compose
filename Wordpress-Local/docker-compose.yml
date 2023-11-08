@@ -1,0 +1,44 @@
+version: '3.1'
+
+services:
+
+  Wordpress:
+    image: wordpress:latest
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+    volumes:
+      - wordpress-data:/var/www/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.feed.rule=Host(`wordpress.docker`)"
+      - "traefik.http.routers.feed.entrypoints=web,websecure"
+      - "traefik.http.routers.feed.tls=true"
+    depends_on:
+      - "Database"
+
+  Database:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - wordpress-db:/var/lib/mysql
+
+volumes:
+  wordpress-data:
+    name: "wordpress-data"
+    external: "true"
+  wordpress-db:
+    name: "wordpress-db"
+    external: "true"
+networks:
+  default:
+    name: Traefik
+    external: "true"
