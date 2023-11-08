@@ -40,3 +40,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.feed.rule=Host(`feed.localhost`)"
       - "traefik.http.routers.feed.entrypoints=web"
+volumes:   #only use if defining docker volume in line 18.
+  rss-data:
+    name: rss-data
+    external: true  #only use if volume has been created once before
