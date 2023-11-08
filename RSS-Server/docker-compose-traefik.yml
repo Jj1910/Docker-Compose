@@ -1,46 +1,48 @@
 version: "3.3"
 services:
-  traefik:
+  Traefik:
     image: "traefik:latest"
-    container_name: traefik
-    command:
-      #- "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      
+    container_name: "traefik"
     ports:
       - "80:80"
       - "8080:8080"
       - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      
-  fivefilters-full-text-rss:
-    container_name: Aggregator
-    restart: always
+      - "./traefik-config:/etc/traefik"
+      - "traefik-ssl-certs:/ssl-certs"
+    restart: "unless-stopped"
+
+  Aggregator:
+    container_name: "Aggregator"
+    restart: "always"
     image: "heussd/fivefilters-full-text-rss:latest"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.aggregator.rule=Host(`aggregator.localhost`)"
-      - "traefik.http.routers.aggregator.entrypoints=web"
-      
-  linuxserver:
-    container_name: FreshRSS
+      - "traefik.http.routers.aggregator.rule=Host(`aggregator.docker`)"
+      - "traefik.http.routers.aggregator.entrypoints=websecure"
+      - "traefik.http.routers.aggregator.tls=true"
+
+  FreshRss:
+    container_name: "FreshRSS"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/New_York
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=America/New_York"
     volumes:
-      - rss-data:/var/www/FreshRSS/data 
-    restart: unless-stopped
+      - "rss-data:/var/www/FreshRSS/data"
+    restart: "unless-stopped"
     image: "freshrss/freshrss:latest"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.feed.rule=Host(`feed.localhost`)"
-      - "traefik.http.routers.feed.entrypoints=web"
-volumes:   #only use if defining docker volume in line 18.
+      - "traefik.http.routers.feed.rule=Host(`feed.docker`)"
+      - "traefik.http.routers.feed.entrypoints=websecure"
+      - "traefik.http.routers.feed.tls=true"
+
+volumes:
   rss-data:
-    name: rss-data
-    external: true  #only use if volume has been created once before
+    name: "rss-data"
+    external: "true"  
+  traefik-ssl-certs:
+    name: "traefik-ssl-certs"
+    external: "true"
