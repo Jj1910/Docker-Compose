@@ -1,3 +1,4 @@
+version: "3.3"
 services:
   traefik:
     image: "traefik:latest"
@@ -32,7 +33,7 @@ services:
       - PGID=1000
       - TZ=America/New_York
     volumes:
-      - ./rss-data:/var/www/FreshRSS/data #bind docker volume called rss-data to /config on guest
+      - rss-data:/var/www/FreshRSS/data 
     restart: unless-stopped
     image: "freshrss/freshrss:latest"
     labels:
