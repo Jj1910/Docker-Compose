@@ -4,7 +4,6 @@ global:
 
 api:
   dashboard: true
-  insecure: false
 
 entryPoints:
   web:
