@@ -11,6 +11,12 @@ services:
       - "./traefik-config:/etc/traefik"
       - "traefik-ssl-certs:/ssl-certs"
     restart: "unless-stopped"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.docker`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls=true"
+      - "traefik.http.routers.dashboard.service=api@internal"
 
 volumes:
   traefik-ssl-certs:
