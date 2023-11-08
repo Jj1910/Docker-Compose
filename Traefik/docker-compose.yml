@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+  Traefik:
+    image: "traefik:latest"
+    container_name: "Traefik"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik-config:/etc/traefik"
+      - "traefik-ssl-certs:/ssl-certs"
+    restart: "unless-stopped"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`...`)"
+      - "traefik.http.routers.dashboard.entrypoints=dashboard"
+      - "traefik.http.routers.dashboard.tls=true"
+      - "traefik.http.routers.dashboard.service=api@internal"
+
+volumes:
+  traefik-ssl-certs:
+    name: "traefik-ssl-certs"
+    external: "true"
+
+networks:
+  default:
+    name: Traefik
+    external: true
