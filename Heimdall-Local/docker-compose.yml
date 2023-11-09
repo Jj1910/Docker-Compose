@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+  Heimdall:
+    container_name: "Heimdall"
+    restart: "unless-stopped"
+    image: "lscr.io/linuxserver/heimdall:latest"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.heimdall.rule=Host(`heimdall.localhost`)"
+      - "traefik.http.routers.heimdall.entrypoints=websecure"
+      - "traefik.http.routers.heimdall.tls=true"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Etc/UTC"
+    volumes:
+      - "heimdall-data:/config"
+
+volumes:
+  heimdall-data:
+    name: "heimdall-data"
+    external: "true"
+networks:
+  default:
+    name: Traefik
+    external: true
