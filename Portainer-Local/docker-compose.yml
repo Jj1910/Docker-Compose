@@ -1,0 +1,24 @@
+version: "3.3"
+services:
+  Portainer:
+    container_name: "Portainer"
+    restart: "unless-stopped"
+    image: "portainer/portainer-ce:latest"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.localhost`)"
+      - "traefik.http.routers.portainer.entrypoints=web,websecure"
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "portainer-data:/data"
+
+volumes:
+  portainer-data:
+    name: "portainer-data"
+    external: "true"
+networks:
+  default:
+    name: Traefik
+    external: true
