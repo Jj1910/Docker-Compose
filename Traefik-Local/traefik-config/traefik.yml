@@ -20,9 +20,6 @@ entryPoints:
   dashboard:
     address: :8080
 
-  heimdall:
-    address: :8081
-
 accessLog:
   filePath: "/var/log/traefik/access.log"
 
