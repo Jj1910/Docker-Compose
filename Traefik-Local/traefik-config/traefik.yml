@@ -23,6 +23,9 @@ entryPoints:
   heimdall:
     address: :8081
 
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+
 providers:
   docker:
     exposedByDefault: false
