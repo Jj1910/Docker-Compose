@@ -7,7 +7,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.heimdall.rule=Host(`heimdall.localhost`)"
-      - "traefik.http.routers.heimdall.entrypoints=heimdall"
+      - "traefik.http.routers.heimdall.entrypoints=web,websecure"
       - "traefik.http.routers.heimdall.tls=true"
     environment:
       - "PUID=1000"
