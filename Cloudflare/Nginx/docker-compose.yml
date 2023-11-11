@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  Nginx:
+    container_name: "Nginx"
+    restart: "unless-stopped"
+    image: "nginx"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`...`)"
+      - "traefik.http.routers.nginx.entrypoints=websecure"
+      - "traefik.http.routers.nginx.tls=true"
+    volumes:
+      - "./html:/usr/share/nginx/html"
+networks:
+  default:
+    name: Frontend
+    external: true
+

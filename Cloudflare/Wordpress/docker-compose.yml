@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    restart: unless-stopped
+    container_name: Wordpress
+    environment:
+      WORDPRESS_DB_HOST: Database
+      WORDPRESS_DB_USER: databaseUser
+      WORDPRESS_DB_PASSWORD: "..."
+      WORDPRESS_DB_NAME: wordpressSQL
+    volumes:
+      - wordpress--data:/var/www/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wordpress.rule=Host(`...`,`...`)"
+      - "traefik.http.routers.wordpress.entrypoints=websecure"
+      - "traefik.http.routers.wordpress.tls=true"
+    depends_on:
+      - "Database"
+
+  Database:
+    image: mysql:latest
+    restart: unless-stopped
+    container_name: Database
+    environment:
+      MYSQL_DATABASE: wordpressSQL
+      MYSQL_USER: databaseUser
+      MYSQL_PASSWORD: "..."
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - wordpress--db:/var/lib/mysql
+
+volumes:
+  wordpress--data:
+    name: "wordpress--data"
+    external: true
+  wordpress--db:
+    name: "wordpress--db"
+    external: true
+
+networks:
+  default:
+    name: Frontend
+    external: true

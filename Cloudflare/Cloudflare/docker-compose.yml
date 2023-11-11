@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  Cloudflare:
+    container_name: Cloudflare
+    restart: unless-stopped
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=
+
+networks:
+  default:
+    name: Frontend
+    external: true 
