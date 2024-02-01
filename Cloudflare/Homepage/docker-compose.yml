@@ -1,0 +1,22 @@
+version: "3.3"
+services:
+  Heimdall:
+    container_name: "Homepage"
+    restart: "unless-stopped"
+    image: "ghcr.io/gethomepage/homepage:latest"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homepage.rule=Host(`...`)"
+      - "traefik.http.routers.homepage.entrypoints=websecure"
+      - "traefik.http.routers.homepage.tls=true"
+    environment:
+      - "PUID=1000"
+      - "PGID=999"
+    volumes:
+      - "./config:/app/config"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+networks:
+  default:
+    name: Frontend
+    external: true

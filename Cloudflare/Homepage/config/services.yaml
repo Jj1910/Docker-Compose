@@ -1,0 +1,53 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/services
+
+- Console:
+    - Proxmox:
+        icon: proxmox.png
+        href: ...
+        description: Proxmox Console
+        siteMonitor: ...
+    - PFSense:
+        icon: pfsense.png
+        href: ...
+        description: PFSense Portal
+        siteMonitor: ...
+
+- Services:
+    - ... :
+        icon: nginx.png
+        href: ...
+        description: Cat
+        server: docker-prod
+        container: Nginx
+    - Portainer:
+        icon: portainer.png
+        href: ...
+        description: Portainer Access
+        server: docker-prod
+        container: Portainer
+    - Traefik:
+        icon: traefik.png
+        href: ...
+        description: Traefik Dashboard
+        server: docker-prod
+        container: Traefik
+    - Feed:
+        icon: freshrss.png
+        href: ...
+        description: RSS Feed
+        server: docker-prod
+        container: FreshRSS
+    - Aggregator:
+        icon: freshrss.png
+        href: ...
+        description: RSS Feed Aggregator
+        server: docker-prod
+        container: Aggregator
+    - ... Site:
+        icon: wordpress.png
+        href: ...
+        description: ... Blog
+        server: docker-prod
+        container: Wordpress

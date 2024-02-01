@@ -1,0 +1,26 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/service-widgets
+
+- resources:
+    cpu: true
+    memory: true
+    disk: /
+
+- openmeteo: #Weather
+    label: Home
+    latitude: ...
+    longitude: ...
+    timezone: America/New_York
+    units: imperial
+    cache: 5
+
+- search:
+    provider: duckduckgo
+    target: _blank
+
+
+- datetime:
+    text_size: xl
+    format:
+      timeStyle: short
